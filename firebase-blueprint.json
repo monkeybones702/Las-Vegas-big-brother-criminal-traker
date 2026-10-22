@@ -1,0 +1,53 @@
+{
+  "entities": {
+    "Detection": {
+      "title": "Detection",
+      "description": "An AI-detected object in a CCTV feed.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "cameraId": { "type": "number" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "category": { "type": "string" }
+      },
+      "required": ["id", "cameraId", "timestamp", "category"]
+    },
+    "TrackedSubject": {
+      "title": "TrackedSubject",
+      "description": "An object tracked across multiple cameras.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "label": { "type": "string" },
+        "category": { "type": "string" }
+      },
+      "required": ["id", "label", "category"]
+    },
+    "Snapshot": {
+      "title": "Snapshot",
+      "description": "A captured CCTV snapshot.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "cameraId": { "type": "number" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "imageUrl": { "type": "string" }
+      },
+      "required": ["id", "cameraId", "timestamp", "imageUrl"]
+    }
+  },
+  "firestore": {
+    "/detections/{detectionId}": {
+      "schema": "Detection",
+      "description": "Storage for AI detections."
+    },
+    "/trackedSubjects/{subjectId}": {
+      "schema": "TrackedSubject",
+      "description": "Storage for tracked subjects."
+    },
+    "/snapshots/{snapshotId}": {
+      "schema": "Snapshot",
+      "description": "Storage for captured snapshots."
+    }
+  }
+}

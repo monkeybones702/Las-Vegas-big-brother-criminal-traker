@@ -1,0 +1,8 @@
+{
+  "name": "Remix Las Vegas NVFAST CCTV Scanner \u0026 Tracker",
+  "description": "Aegis Pulse: System Architecture \u0026 Design Specification\n​1. Executive Summary \u0026 Vision\n​Aegis Pulse is a dual-tier (B2B/B2C) real-time civil unrest intelligence, automated threat detection, and personal safety routing platform. By fusing municipal CCTV streams, computer vision (YOLOv8), targeted OSINT scraping, and hyper-local spatial caching, Aegis Pulse bridges the gap between raw data and actionable situational awareness.\n​B2B Command Dashboard (Aegis Command): Provides security teams, journalists, and municipal operators with low-latency, unblurred live video feeds, AI-verified incident alerts, and operational risk metrics.\n​B2C Mobile Application (Aegis Live): Empowers citizens with real-time hazard avoidance, safe-path routing, location-aware alerts, and offline-first survival guidance during high-stress civil events.\n​2. High-Level System Architecture",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

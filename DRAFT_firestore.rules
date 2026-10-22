@@ -1,0 +1,60 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Validation helpers
+    function isValidDetection(data) {
+      return data.id is string && data.id.size() <= 128 &&
+             data.cameraId is number &&
+             data.timestamp is string &&
+             data.category is string && data.category.size() <= 50;
+    }
+
+    function isValidTrackedSubject(data) {
+      return data.id is string && data.id.size() <= 128 &&
+             data.label is string && data.label.size() <= 128 &&
+             data.category is string && data.category.size() <= 50;
+    }
+
+    function isValidSnapshot(data) {
+      return data.id is string && data.id.size() <= 128 &&
+             data.cameraId is number &&
+             data.timestamp is string &&
+             data.imageUrl is string && data.imageUrl.size() <= 1024;
+    }
+
+    match /detections/{detectionId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() && isValidId(detectionId) && isValidDetection(request.resource.data);
+      allow update: if isSignedIn() && isValidDetection(request.resource.data) &&
+                      request.resource.data.id == resource.data.id;
+      allow delete: if false;
+    }
+
+    match /trackedSubjects/{subjectId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() && isValidId(subjectId) && isValidTrackedSubject(request.resource.data);
+      allow update: if isSignedIn() && isValidTrackedSubject(request.resource.data) &&
+                      request.resource.data.id == resource.data.id;
+      allow delete: if false;
+    }
+
+    match /snapshots/{snapshotId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() && isValidId(snapshotId) && isValidSnapshot(request.resource.data);
+      allow update: if false;
+      allow delete: if false;
+    }
+  }
+}
